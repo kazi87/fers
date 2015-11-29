@@ -1,10 +1,5 @@
 package com.kazi.fers.controller;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-import java.net.URL;
-
 import com.kazi.fers.FERApplication;
 import com.kazi.fers.model.ecb.Envelope;
 import org.junit.Before;
@@ -18,6 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URL;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * TODO: description
