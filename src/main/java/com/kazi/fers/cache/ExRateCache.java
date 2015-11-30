@@ -13,7 +13,7 @@ public interface ExRateCache {
 
     ExRate getExRate(String currency, Date day);
 
-    void updateExRate(String currency, Date day, ExRate exRate);
+    void updateExRate(ExRate exRate);
 
     void flush();
 

@@ -32,18 +32,19 @@ public class MemoryExRateCache implements ExRateCache {
     }
 
     @Override
-    public void updateExRate(String currency, Date day, ExRate exRate) {
-        Validate.notNull(currency, "Currency can not be null");
-        Validate.notNull(day, "Day can not be null");
+    public void updateExRate(ExRate exRate) {
         Validate.notNull(exRate, "ExRate can not be null");
+        Validate.notNull(exRate.getCurrency(), "Currency can not be null");
+        Validate.notNull(exRate.getRate(), "Exchange Rate can not be null");
+        Validate.notNull(exRate.getDate(), "Day can not be null");
 
-        String dayAsString = getDateAsStringKey(day);
+        String dayAsString = getDateAsStringKey(exRate.getDate());
         Map<String, ExRate> currencyMap = cache.get(dayAsString);
         if (currencyMap == null) {
             cache.put(dayAsString, new HashMap<>());
             currencyMap = cache.get(dayAsString);
         }
-        currencyMap.put(currency, exRate);
+        currencyMap.put(exRate.getCurrency(), exRate);
     }
 
     @Override
@@ -54,5 +55,5 @@ public class MemoryExRateCache implements ExRateCache {
     private String getDateAsStringKey(Date day) {
         return DATE_FORMAT.format(day);
     }
-    
+
 }

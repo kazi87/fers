@@ -47,7 +47,7 @@ public class MemoryExRateCacheTest {
         BigDecimal rate = BigDecimal.valueOf(1.1);
         ExRate exRate = new ExRate(currency, rate, testExRateDate);
         //  when
-        testObj.updateExRate(currency, testExRateDate, exRate);
+        testObj.updateExRate(exRate);
         //  then
         ExRate result = testObj.getExRate(currency, testExRateDate);
         assertEquals(exRate, result);
@@ -64,8 +64,8 @@ public class MemoryExRateCacheTest {
         ExRate secondEntry = new ExRate(currency, secondRate, testExRateDate);
 
         //  when
-        testObj.updateExRate(currency, testExRateDate, firstEntry);
-        testObj.updateExRate(currency, testExRateDate, secondEntry);
+        testObj.updateExRate(firstEntry);
+        testObj.updateExRate(secondEntry);
 
         //  then
         ExRate result = testObj.getExRate(currency, testExRateDate);
@@ -82,8 +82,8 @@ public class MemoryExRateCacheTest {
         BigDecimal secondRate = BigDecimal.valueOf(1.2);
         ExRate firstEntry = new ExRate(currency, firstRate, firstDate);
         ExRate secondEntry = new ExRate(currency, secondRate, secondDate);
-        testObj.updateExRate(currency, firstDate, firstEntry);
-        testObj.updateExRate(currency, secondDate, secondEntry);
+        testObj.updateExRate(firstEntry);
+        testObj.updateExRate(secondEntry);
 
         //  when
         ExRate firstResult = testObj.getExRate(currency, firstDate);
@@ -98,26 +98,24 @@ public class MemoryExRateCacheTest {
     public void shouldThrowExceptionIfDateIsNull() throws Exception {
         //  given
         String currency = "CHF";
-        Date firstDate = formatter.parse("2015-11-30");
         BigDecimal firstRate = BigDecimal.valueOf(1.1);
-        ExRate firstEntry = new ExRate(currency, firstRate, firstDate);
+        ExRate firstEntry = new ExRate(currency, firstRate, null);
 
         //  when
         //  then
-        testObj.updateExRate(currency, null, firstEntry);
+        testObj.updateExRate(firstEntry);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowExceptionIfCurrencyIsNull() throws Exception {
         //  given
-        String currency = "CHF";
         Date firstDate = formatter.parse("2015-11-30");
         BigDecimal firstRate = BigDecimal.valueOf(1.1);
-        ExRate firstEntry = new ExRate(currency, firstRate, firstDate);
+        ExRate firstEntry = new ExRate(null, firstRate, firstDate);
 
         //  when
         //  then
-        testObj.updateExRate(null, firstDate, firstEntry);
+        testObj.updateExRate(firstEntry);
     }
 
     @Test(expected = NullPointerException.class)
@@ -130,7 +128,7 @@ public class MemoryExRateCacheTest {
 
         //  when
         //  then
-        testObj.updateExRate(currency, firstDate, null);
+        testObj.updateExRate(null);
     }
 
     @Test
@@ -140,7 +138,7 @@ public class MemoryExRateCacheTest {
         String currency = "CHF";
         BigDecimal rate = BigDecimal.valueOf(1.1);
         ExRate exRate = new ExRate(currency, rate, testExRateDate);
-        testObj.updateExRate(currency, testExRateDate, exRate);
+        testObj.updateExRate(exRate);
         //  when
         testObj.flush();
         //  then
@@ -159,7 +157,7 @@ public class MemoryExRateCacheTest {
         ExRate entry = new ExRate(currency, firstRate, firstExRateDate);
 
         //  when
-        testObj.updateExRate(currency, firstExRateDate, entry);
+        testObj.updateExRate(entry);
 
         //  then
         ExRate result = testObj.getExRate(currency, exRateDate);
