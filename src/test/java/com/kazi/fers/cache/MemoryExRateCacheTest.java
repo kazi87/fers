@@ -25,14 +25,12 @@ public class MemoryExRateCacheTest {
     @Before
     public void setUp() throws Exception {
         testObj = new MemoryExRateCache();
-
-        formatter = new SimpleDateFormat("yyyy-MM-dd");
     }
 
     @Test
     public void shouldReturnNothingIfEmpty() throws Exception {
         //  given
-        Date testExRateDate = formatter.parse("2015-11-30");
+        LocalDate testExRateDate = LocalDate.parse("2015-11-30");
         //  when
         ExRate result = testObj.getExRate("CHF", testExRateDate);
         //  then
@@ -42,7 +40,7 @@ public class MemoryExRateCacheTest {
     @Test
     public void shouldAddEntry() throws Exception {
         //  given
-        Date testExRateDate = formatter.parse("2015-11-30");
+        LocalDate testExRateDate = LocalDate.parse("2015-11-30");
         String currency = "CHF";
         BigDecimal rate = BigDecimal.valueOf(1.1);
         ExRate exRate = new ExRate(currency, rate, testExRateDate);
@@ -56,7 +54,7 @@ public class MemoryExRateCacheTest {
     @Test
     public void shouldReturnLastEntryForTheSameQuery() throws Exception {
         //  given
-        Date testExRateDate = formatter.parse("2015-11-30");
+        LocalDate testExRateDate = LocalDate.parse("2015-11-30");
         String currency = "CHF";
         BigDecimal firstRate = BigDecimal.valueOf(1.1);
         BigDecimal secondRate = BigDecimal.valueOf(1.2);
@@ -76,8 +74,8 @@ public class MemoryExRateCacheTest {
     public void shouldReturnEntryForGivenDate() throws Exception {
         //  given
         String currency = "CHF";
-        Date firstDate = formatter.parse("2015-11-30");
-        Date secondDate = formatter.parse("2015-11-29");
+        LocalDate firstDate = LocalDate.parse("2015-11-30");
+        LocalDate secondDate = LocalDate.parse("2015-11-29");
         BigDecimal firstRate = BigDecimal.valueOf(1.1);
         BigDecimal secondRate = BigDecimal.valueOf(1.2);
         ExRate firstEntry = new ExRate(currency, firstRate, firstDate);
@@ -109,7 +107,7 @@ public class MemoryExRateCacheTest {
     @Test(expected = NullPointerException.class)
     public void shouldThrowExceptionIfCurrencyIsNull() throws Exception {
         //  given
-        Date firstDate = formatter.parse("2015-11-30");
+        LocalDate firstDate = LocalDate.parse("2015-11-30");
         BigDecimal firstRate = BigDecimal.valueOf(1.1);
         ExRate firstEntry = new ExRate(null, firstRate, firstDate);
 
@@ -122,9 +120,9 @@ public class MemoryExRateCacheTest {
     public void shouldThrowExceptionIfExRateIsNull() throws Exception {
         //  given
         String currency = "CHF";
-        Date firstDate = formatter.parse("2015-11-30");
+        LocalDate firstDate = LocalDate.parse("2015-11-30");
         BigDecimal firstRate = BigDecimal.valueOf(1.1);
-        ExRate firstEntry = new ExRate(currency, firstRate, firstDate);
+        new ExRate(currency, firstRate, firstDate);
 
         //  when
         //  then
@@ -134,7 +132,7 @@ public class MemoryExRateCacheTest {
     @Test
     public void shouldFlushCache() throws Exception {
         //  given
-        Date testExRateDate = formatter.parse("2015-11-30");
+        LocalDate testExRateDate = LocalDate.parse("2015-11-30");
         String currency = "CHF";
         BigDecimal rate = BigDecimal.valueOf(1.1);
         ExRate exRate = new ExRate(currency, rate, testExRateDate);
@@ -144,23 +142,5 @@ public class MemoryExRateCacheTest {
         //  then
         ExRate result = testObj.getExRate(currency, testExRateDate);
         assertNull(result);
-    }
-
-    @Test
-    public void shouldReturnEntryForTheSameDateButDifferentTime() throws Exception {
-        //  given
-        Date exRateDate = formatter.parse("2015-11-30");
-        formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        Date firstExRateDate = formatter.parse("2015-11-30 11:04");
-        String currency = "CHF";
-        BigDecimal firstRate = BigDecimal.valueOf(1.1);
-        ExRate entry = new ExRate(currency, firstRate, firstExRateDate);
-
-        //  when
-        testObj.updateExRate(entry);
-
-        //  then
-        ExRate result = testObj.getExRate(currency, exRateDate);
-        assertEquals(entry, result);
     }
 }

@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class MemoryExRateCache implements ExRateCache {
     private Map<String, Map<String, ExRate>> cache = new HashMap<>();
 
     @Override
-    public ExRate getExRate(String currency, Date day) {
+    public ExRate getExRate(String currency, LocalDate day) {
         Validate.notNull(currency, "Currency can not be null");
         Validate.notNull(day, "Day can not be null");
         String dateString = getDateAsStringKey(day);
@@ -52,8 +53,8 @@ public class MemoryExRateCache implements ExRateCache {
         cache.clear();
     }
 
-    private String getDateAsStringKey(Date day) {
-        return DATE_FORMAT.format(day);
+    private String getDateAsStringKey(LocalDate day) {
+        return day.format(DateTimeFormatter.ISO_DATE);
     }
 
 }

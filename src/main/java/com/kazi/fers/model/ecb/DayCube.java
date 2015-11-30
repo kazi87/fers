@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -15,16 +17,17 @@ import java.util.List;
 @XmlRootElement(name = "Cube", namespace = "http://www.ecb.int/vocabulary/2002-08-01/eurofxref")
 public class DayCube {
 
-    private Date time;
+    private LocalDate time;
 
     private List<CubeEntry> entries;
 
     @XmlAttribute(name = "time")
-    public Date getTime() {
+    @XmlJavaTypeAdapter( DateAdapter.class )
+    public LocalDate getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDate time) {
         this.time = time;
     }
 

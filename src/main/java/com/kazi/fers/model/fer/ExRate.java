@@ -3,6 +3,7 @@ package com.kazi.fers.model.fer;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -12,12 +13,12 @@ import java.util.Date;
 public class ExRate {
     private String currency;
     private BigDecimal rate;
-    private Date date;
+    private LocalDate date;
 
     public ExRate() {
     }
 
-    public ExRate(String currency, BigDecimal rate, Date date) {
+    public ExRate(String currency, BigDecimal rate, LocalDate date) {
         this.currency = currency;
         this.rate = rate;
         this.date = date;
@@ -42,11 +43,11 @@ public class ExRate {
     }
 
     @XmlElement(name = "date")
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

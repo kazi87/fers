@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -31,11 +32,11 @@ public class ExchangeRateServiceController {
     @ResponseBody
     @RequestMapping("/{currency}/{day}")
     public ExRate getForDay(@PathVariable String currency,
-                            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date day) {
+                            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate day) {
         LOGGER.debug("Process request with currency: " + currency + " and date: " + day);
         ExRate exRate = ferProcessor.process(currency, day);
         if (exRate == null) {
-            throw new ExRateNotFoundException("Not found currency: " + currency + ", day: " + day);
+            throw new ExRateNotFoundException("Exchange rate not found for the currency: " + currency + " and date: " + day);
         }
         LOGGER.debug("Returned ExRate: " + exRate);
         return exRate;
