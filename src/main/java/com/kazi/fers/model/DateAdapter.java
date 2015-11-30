@@ -1,4 +1,4 @@
-package com.kazi.fers.model.ecb;
+package com.kazi.fers.model;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;

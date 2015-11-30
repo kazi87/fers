@@ -23,6 +23,7 @@ public class FERProcessor {
 
     /**
      * How many days before we can request
+     * TODO: extract to configuration
      */
     private int pastRange = 90;
 
@@ -38,15 +39,13 @@ public class FERProcessor {
     public ExRate process(String currency, LocalDate day) {
         Validate.notNull(currency, "Currency is null");
         Validate.notNull(day, "Day is null");
-        validateDate(day);
+        LocalDate validDay = getValidDay(day);
+        validateDateRange(validDay);
 
-        return getExRate(currency, day);
+        return getExRate(currency, validDay);
     }
 
     private ExRate getExRate(String currency, LocalDate day) {
-
-        LocalDate validDay = getValidDay(day);
-
         ExRate exRate = cache.getExRate(currency, day);
         if (exRate == null) {
             LOGGER.info("ExchangeRate: '" + currency + "' for the day: " + day +
@@ -62,19 +61,22 @@ public class FERProcessor {
         return exRate;
     }
 
+    /**
+     * @return if day is weekend, returns last friday, else return day.
+     */
     private LocalDate getValidDay(LocalDate day) {
         if (timeService.isWeekend(day)) {
             day = day.with(DayOfWeek.FRIDAY);
-            LOGGER.info("Changed weekends date from request to: " + day);
+            LOGGER.info("Changed date to weekday: " + day);
         }
         return day;
     }
 
-    private void validateDate(LocalDate day) {
+    private void validateDateRange(LocalDate day) {
         LocalDate now = timeService.now();
         LocalDate lastHandledDay = now.minusDays(pastRange);
         if (day.isAfter(now) || day.isBefore(lastHandledDay)) {
-            throw new IllegalArgumentException("Given date is out of the range[90 days ago - today]: " + day.format(DateTimeFormatter.ISO_DATE));
+            throw new IllegalArgumentException("Given date: " + day.format(DateTimeFormatter.ISO_DATE) + " is out of the range: [90 days ago] - today");
         }
     }
 

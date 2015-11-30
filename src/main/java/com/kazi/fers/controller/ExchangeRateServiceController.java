@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * The main Exchange Rate Service Controller.
+ * TODO: in error handlers return XML with error code and description
  */
 @RequestMapping("/fers")
 @RestController

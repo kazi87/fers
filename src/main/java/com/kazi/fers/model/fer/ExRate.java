@@ -1,7 +1,10 @@
 package com.kazi.fers.model.fer;
 
+import com.kazi.fers.model.DateAdapter;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -43,6 +46,7 @@ public class ExRate {
     }
 
     @XmlElement(name = "date")
+    @XmlJavaTypeAdapter( DateAdapter.class )
     public LocalDate getDate() {
         return date;
     }

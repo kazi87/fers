@@ -1,14 +1,12 @@
 package com.kazi.fers.model.ecb;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kazi.fers.model.DateAdapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
