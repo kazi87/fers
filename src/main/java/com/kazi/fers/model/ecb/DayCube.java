@@ -36,4 +36,31 @@ public class DayCube {
     public void setEntries(List<CubeEntry> entries) {
         this.entries = entries;
     }
+
+    @Override
+    public String toString() {
+        return "DayCube{" +
+                "time=" + time +
+                ", entries=" + entries +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DayCube dayCube = (DayCube) o;
+
+        if (time != null ? !time.equals(dayCube.time) : dayCube.time != null) return false;
+        return !(entries != null ? !entries.equals(dayCube.entries) : dayCube.entries != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = time != null ? time.hashCode() : 0;
+        result = 31 * result + (entries != null ? entries.hashCode() : 0);
+        return result;
+    }
 }

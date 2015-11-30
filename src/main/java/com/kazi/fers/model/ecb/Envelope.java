@@ -19,4 +19,27 @@ public class Envelope {
     public void setCubeContainer(CubeContainer cubeContainer) {
         this.cubeContainer = cubeContainer;
     }
+
+    @Override
+    public String toString() {
+        return "Envelope{" +
+                "cubeContainer=" + cubeContainer +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Envelope envelope = (Envelope) o;
+
+        return !(cubeContainer != null ? !cubeContainer.equals(envelope.cubeContainer) : envelope.cubeContainer != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return cubeContainer != null ? cubeContainer.hashCode() : 0;
+    }
 }
