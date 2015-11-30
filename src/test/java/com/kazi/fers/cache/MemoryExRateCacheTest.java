@@ -147,4 +147,22 @@ public class MemoryExRateCacheTest {
         ExRate result = testObj.getExRate(currency, testExRateDate);
         assertNull(result);
     }
+
+    @Test
+    public void shouldReturnEntryForTheSameDateButDifferentTime() throws Exception {
+        //  given
+        Date exRateDate = formatter.parse("2015-11-30");
+        formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Date firstExRateDate = formatter.parse("2015-11-30 11:04");
+        String currency = "CHF";
+        BigDecimal firstRate = BigDecimal.valueOf(1.1);
+        ExRate entry = new ExRate(currency, firstRate, firstExRateDate);
+
+        //  when
+        testObj.updateExRate(currency, firstExRateDate, entry);
+
+        //  then
+        ExRate result = testObj.getExRate(currency, exRateDate);
+        assertEquals(entry, result);
+    }
 }

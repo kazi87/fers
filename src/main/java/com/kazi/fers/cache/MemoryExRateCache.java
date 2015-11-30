@@ -5,6 +5,7 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
 @Service
 public class MemoryExRateCache implements ExRateCache {
 
+    private final static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
     private Map<String, Map<String, ExRate>> cache = new HashMap<>();
 
     @Override
@@ -50,8 +52,7 @@ public class MemoryExRateCache implements ExRateCache {
     }
 
     private String getDateAsStringKey(Date day) {
-        return DateFormat.getInstance().format(day);
+        return DATE_FORMAT.format(day);
     }
-
-
+    
 }
