@@ -18,7 +18,13 @@ public class ExRate {
     private BigDecimal rate;
     private LocalDate date;
 
+    private String error;
+
     public ExRate() {
+    }
+
+    public ExRate(String error) {
+        this.error = error;
     }
 
     public ExRate(String currency, BigDecimal rate, LocalDate date) {
@@ -53,6 +59,15 @@ public class ExRate {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @XmlElement(name = "error")
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     @Override

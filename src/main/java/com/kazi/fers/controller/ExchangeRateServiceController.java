@@ -37,7 +37,7 @@ public class ExchangeRateServiceController {
         LOGGER.debug("Process request with currency: " + currency + " and date: " + day);
         ExRate exRate = ferProcessor.process(currency, day);
         if (exRate == null) {
-            throw new ExRateNotFoundException("Exchange rate not found for the currency: " + currency + " and date: " + day);
+            return new ExRate("Exchange rate not found for the currency: " + currency + " and date: " + day);
         }
         LOGGER.debug("Returned ExRate: " + exRate);
         return exRate;
@@ -45,22 +45,22 @@ public class ExchangeRateServiceController {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public String error(Exception exception) {
+    public ExRate error(Exception exception) {
         LOGGER.error("Error while request processing.", exception);
-        return "Error while request processing.";
+        return new ExRate("Error while request processing.");
     }
 
     @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class, TypeMismatchException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String invalidArgument(RuntimeException ex) {
+    public ExRate invalidArgument(RuntimeException ex) {
         LOGGER.error("Invalid request parameters ", ex);
-        return ex.getMessage();
+        return new ExRate(ex.getMessage());
     }
 
     @ExceptionHandler(ExRateNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String notFound(ExRateNotFoundException ex) {
+    public ExRate notFound(ExRateNotFoundException ex) {
         LOGGER.error("ExRate not found: ", ex);
-        return ex.getMessage();
+        return new ExRate(ex.getMessage());
     }
 }

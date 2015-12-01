@@ -20,6 +20,7 @@ import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -29,7 +30,7 @@ import static org.junit.Assert.assertThat;
 @SpringApplicationConfiguration(classes = {FERApplication.class, IntegrationTestConfiguration.class})
 @WebAppConfiguration
 @IntegrationTest({"server.port=0"})
-public class RestControllerTestIT {
+public class ExchangeRateServiceControllerTestIT {
 
     @Value("${local.server.port}")
     private String port;
@@ -97,5 +98,31 @@ public class RestControllerTestIT {
         assertEquals(expectedRate, rateSunday.getRate());
         assertEquals(expectedDate, rateSunday.getDate());
     }
+
+    @Test
+    public void errorShouldBeNullIfExRateExists() throws Exception {
+        //  given
+        StringBuilder baseURL = new StringBuilder("http://localhost:").append(port).append("/fers/CHF/2015-11-17");
+
+        //  when
+        ExRate rate = template.getForEntity(baseURL.toString(), ExRate.class).getBody();
+
+        // then
+        assertNull(rate.getError());
+    }
+
+
+    @Test
+    public void shouldReturnErrorIfNotExistingCurrency() throws Exception {
+        //  given
+        StringBuilder baseURL = new StringBuilder("http://localhost:").append(port).append("/fers/XXX/2015-11-17");
+
+        //  when
+        ExRate rate = template.getForEntity(baseURL.toString(), ExRate.class).getBody();
+
+        // then
+        assertNotNull(rate.getError());
+    }
+
 
 }
