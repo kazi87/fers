@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 /**
  * A business logic for FER service.
  */
-@Service
 public class FERProcessor {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FERProcessor.class);

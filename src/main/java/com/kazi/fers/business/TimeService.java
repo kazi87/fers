@@ -10,7 +10,6 @@ import java.util.Date;
 /**
  * A data/time service.
  */
-@Service
 public class TimeService {
 
     public LocalDate now(){

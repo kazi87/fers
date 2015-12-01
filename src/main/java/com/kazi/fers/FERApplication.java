@@ -16,8 +16,6 @@ public class FERApplication {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FERApplication.class);
 
-
-
     public static void main(String[] args) {
         LOGGER.info("FERApplication is starting...");
         ApplicationContext ctx = SpringApplication.run(FERApplication.class, args);

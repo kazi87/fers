@@ -4,6 +4,7 @@ import com.kazi.fers.business.FERProcessor;
 import com.kazi.fers.model.fer.ExRate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -49,10 +50,10 @@ public class ExchangeRateServiceController {
         return "Error while request processing.";
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class, TypeMismatchException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public String invalidArgument(RuntimeException ex) {
-        LOGGER.error("Invalid request parameters: ", ex);
+        LOGGER.error("Invalid request parameters ", ex);
         return ex.getMessage();
     }
 

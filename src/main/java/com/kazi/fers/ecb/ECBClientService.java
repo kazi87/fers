@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
  * The ECB client service.
  * TODO: TEST!
  */
-@Service
 public class ECBClientService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ECBClientService.class);
