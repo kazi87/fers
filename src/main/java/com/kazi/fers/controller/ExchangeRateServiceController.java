@@ -19,7 +19,6 @@ import java.time.LocalDate;
 
 /**
  * The main Exchange Rate Service Controller.
- * TODO: in error handlers return XML with error code and description
  */
 @RequestMapping("/fers")
 @RestController
