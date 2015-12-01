@@ -18,7 +18,7 @@ public class FERApplication {
 
     public static void main(String[] args) {
         LOGGER.info("FERApplication is starting...");
-        ApplicationContext ctx = SpringApplication.run(FERApplication.class, args);
+        SpringApplication.run(FERApplication.class, args);
         LOGGER.info("FERApplication started.");
 
     }

@@ -38,7 +38,11 @@ public class ECBSynchronizeService {
         synchronize();
     }
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    /**
+     * Scheduled for every 30 min for demo purpose.
+     * Cron configuration should be extracted to the configuration file.
+     */
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void synchronize() {
         LOGGER.info("Synchronize service start at: " + new Date());
         CubeContainer container = ecbClientService.getLast90Days();
@@ -52,6 +56,7 @@ public class ECBSynchronizeService {
 
     private void parseCubeContainer(CubeContainer container) {
         cache.flush();
+        LOGGER.info("Flush the cache before synchronization...");
         int i = 0;
         for (DayCube dc : container.getDayCubes()) {
             LocalDate date = dc.getTime();
