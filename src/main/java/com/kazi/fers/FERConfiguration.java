@@ -1,4 +1,4 @@
-package com.kazi.fers.controller;
+package com.kazi.fers;
 
 import com.kazi.fers.business.FERProcessor;
 import com.kazi.fers.business.TimeService;
